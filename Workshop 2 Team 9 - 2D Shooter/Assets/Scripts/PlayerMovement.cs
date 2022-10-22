@@ -11,22 +11,29 @@ public class PlayerMovement : MonoBehaviour
     public Camera cam;
     public Animator animator;
 
-    Vector2 movement;
-    Vector2 mousePos;
+    private Vector2 movement;
+    private Vector2 mousePos;
+
+    public GameObject topRightLimitGameObject;
+    public GameObject bottomLeftLimitGameObject;
+
+    private Vector3 topRightLimit;
+    private Vector3 bottomLeftLimit;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        transform.position = new Vector3(0, 0, 0);
+        topRightLimit = topRightLimitGameObject.transform.position;
+        bottomLeftLimit = bottomLeftLimitGameObject.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        cam.ScreenToWorldPoint(Input.mousePosition);
+        //mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
@@ -35,10 +42,21 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        
+
+        if ((transform.position.x <= bottomLeftLimit.x && movement.x == -1) || (transform.position.x >= topRightLimit.x && movement.x == 1))
+        {
+            movement.x = 0;
+        }
+        if ((transform.position.y <= bottomLeftLimit.y && movement.y == -1) || (transform.position.y >= topRightLimit.y && movement.y == 1))
+        {
+            movement.y = 0;
+        }
+        
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
 
-        // Vector2 lookDir = mousePos - rb.position;
-        // float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
-        // rb.rotation = angle;
+        //Vector2 lookDir = mousePos - rb.position;
+        //float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+        //rb.rotation = angle;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHealth = 10;
+    public int maxHealth = 3;
     public int currentHealth;
 
     public GameObject deathEffect;
@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviour
 
     void TakeDamage(int damage)
     {
-     currentHealth -= damage;
+        currentHealth -= damage;
 
         if (currentHealth <= 0)
         {
