@@ -20,6 +20,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 topRightLimit;
     private Vector3 bottomLeftLimit;
 
+    public GameObject[] lives;
+    public int life;
+    private bool dead = false; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,13 +35,25 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (dead)
+        {
+            Debug.Log("You are dead!");
+            Exit();
+        }
+        
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
 
-        //mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Speed", movement.sqrMagnitude);
+    }
+
+    void Exit()
+    {
+        Application.Quit();
     }
 
     void FixedUpdate()
@@ -55,8 +71,32 @@ public class PlayerMovement : MonoBehaviour
         
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
 
-        //Vector2 lookDir = mousePos - rb.position;
-        //float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
-        //rb.rotation = angle;
+        Vector2 lookDir = mousePos - rb.position;
+        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+        rb.rotation = angle;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Enemy":
+                TakeDamage();
+                break;
+        }
+    }
+
+    public void TakeDamage()
+    {
+        if (life >= 1)
+        {
+            life--;
+            Destroy(lives[life].gameObject);
+            if (life < 1)
+            {
+                dead = true;
+            }
+        }
+    }
+
 }
