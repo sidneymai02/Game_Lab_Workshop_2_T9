@@ -76,7 +76,8 @@ public class SpawnWave : MonoBehaviour
         if (nextWave + 1 > waves.Length - 1)
         {
             nextWave = 0;
-            Debug.Log("ALL WAVES COMPLETE! Looping...");
+            Debug.Log("ALL WAVES COMPLETE!");
+            EndGame();
         }
         else
         {
@@ -120,5 +121,11 @@ public class SpawnWave : MonoBehaviour
         Debug.Log("Spawning enemy " + _enemy.name);
         Transform _sp = spawnPoints[Random.Range(0, spawnPoints.Length)];
         Instantiate(_enemy, _sp.position, _sp.rotation);
+    }
+
+    void EndGame()
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
     }
 }

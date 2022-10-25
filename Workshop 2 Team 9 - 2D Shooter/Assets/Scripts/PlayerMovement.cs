@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         if (dead)
         {
             Debug.Log("You are dead!");
-            Exit();
+            EndGame();
         }
         
         movement.x = Input.GetAxisRaw("Horizontal");
@@ -51,8 +51,9 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Speed", movement.sqrMagnitude);
     }
 
-    void Exit()
+    void EndGame()
     {
+        UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 
