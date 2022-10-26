@@ -7,8 +7,8 @@ public class EnemyAI : MonoBehaviour
 {
     //public static event Action<Enemy> OnEnemyKilled;
 
-    [SerializeField] float health, maxHealth = 3f;
-    [SerializeField] float moveSpeed = 3f;
+    [SerializeField] float health, maxHealth = 10f;
+    [SerializeField] float moveSpeed = 30f;
 
     Rigidbody2D rb;
     Transform target;

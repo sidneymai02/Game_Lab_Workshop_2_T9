@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    public float duration = 4f;
-    public GameObject pickupEffect;
+    [SerializeField]public int duration;
+    //public GameObject pickupEffect;
+    [SerializeField]public int projectileamt;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -16,15 +17,16 @@ public class PowerUp : MonoBehaviour
     }
     IEnumerator Pickup(Collider2D player)
     {
-        Instantiate(pickupEffect, transform.position, transform.rotation);
+        //Instantiate(pickupEffect, transform.position, transform.rotation);
 
         TripleShot effect = player.GetComponent<TripleShot>();
-        effect.NumberOfProjectiles += 2;
+        effect.NumberOfProjectiles += projectileamt;
 
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
 
         yield return new WaitForSeconds(duration);
+        effect.NumberOfProjectiles -= projectileamt;
 
         Destroy(this.gameObject);
     }

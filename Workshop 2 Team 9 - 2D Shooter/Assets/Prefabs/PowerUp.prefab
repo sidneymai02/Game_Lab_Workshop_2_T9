@@ -98,8 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e507840713ee5fe48ad397fb37569d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 4
+  duration: 6
   pickupEffect: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+  projectileamt: 2
 --- !u!61 &5554184226252503804
 BoxCollider2D:
   m_ObjectHideFlags: 0
