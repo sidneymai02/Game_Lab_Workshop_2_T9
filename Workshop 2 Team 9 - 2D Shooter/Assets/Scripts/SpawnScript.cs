@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnScript : MonoBehaviour
 {   
     public GameObject spawnObject;
+    [SerializeField]public int SpawnTime;
 
     void Start()
     {
@@ -17,7 +18,7 @@ public class SpawnScript : MonoBehaviour
         {
             Vector3 PowerUpPosition = new Vector3(Random.Range(-7f, 7f), Random.Range(-4f,4f), 0f);
             Instantiate(spawnObject, PowerUpPosition, Quaternion.identity);
-            yield return new WaitForSeconds(30);
+            yield return new WaitForSeconds(SpawnTime);
         }
     }
 }
