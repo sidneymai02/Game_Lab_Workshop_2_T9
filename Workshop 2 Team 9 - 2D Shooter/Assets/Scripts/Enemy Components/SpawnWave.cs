@@ -125,7 +125,6 @@ public class SpawnWave : MonoBehaviour
 
     void EndGame()
     {
-        UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 }
